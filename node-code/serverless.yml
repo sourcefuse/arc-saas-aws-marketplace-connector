@@ -1,0 +1,187 @@
+service: arc-saas-aws-marketplace-connector
+
+custom:
+  config: ${file(./config.json)}
+  cors:
+    origin: "*"
+    headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - x-amz-id-token
+      - Cache-Control
+      - Pragma
+      - Expires
+  tableNames:
+    USER_TABLE: arc-saas-mp-subscriber-${self:custom.config.stage}
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ${self:custom.config.region} 
+  stage: ${self:custom.config.stage}
+  environment:
+    webpageDomain: https://${self:custom.config.UIBucketName}.s3.${self:custom.config.region}.amazonaws.com
+    webpageURL: https://${self:custom.config.UIBucketName}.s3.${self:custom.config.region}.amazonaws.com/index.html
+    aws_region: ${self:custom.config.region}
+    SMTP_USER: ${self:custom.config.smtp_user}
+    SMTP_PASSWORD: ${self:custom.config.smtp_password}
+    SMTP_HOST: ${self:custom.config.smtp_host}
+    AWSMarketplaceADMIN: ${self:custom.config.marketplaceAdminEmail}
+    mp_region: us-east-1
+    userTable: ${self:custom.tableNames.USER_TABLE}
+    LOG_LEVEL: debug
+    
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action: "*"
+          Resource: "*"
+  apiGateway:    
+    apiKeys:
+      - mp_integration_${self:provider.stage}
+    usagePlan:
+      quota:
+        limit: 10000
+        offset: 0
+        period: DAY
+      throttle:
+        burstLimit: 5
+        rateLimit: 5
+
+functions:
+  RedirectToRegister:
+    handler: redirect.handler
+    events:
+      - http:
+          path: register
+          method: post
+  GrantRevokeAccess:
+    handler: grant-revoke-access-to-product.handler
+    environment:
+      SupportSNSARN: !Ref SupportSNS
+    events:
+      - stream:
+          type: dynamodb
+          batchSize: 1
+          startingPosition: LATEST
+          arn:
+            Fn::GetAtt:
+              - AWSMarketplaceSubscribers
+              - StreamArn
+  SubscribeUser:
+    handler: subscribe-user.handler
+    events:
+      - http:
+          path: subscribe
+          method: post
+          private: true
+          cors: ${self:custom.cors}
+  Entitlement:
+    handler: entitlement-sqs.handler
+    events:
+      - sqs:
+          arn: !GetAtt AWSMarketplaceEntitlementQueue.Arn
+  MeteringHourlyJob:
+    handler: meteringHourlyJob.handler
+    events:
+      - schedule:
+          rate: rate(24 hours)
+          enabled: true
+  SetupResources:
+    handler: setup-resources.handler
+    events:
+      - sns:
+          arn: !Ref SupportSNS
+          topicName: arc-saas-mp-SupportSNSTopic-${self:custom.config.stage}
+
+resources: # CloudFormation template syntax from here on.
+  Resources:
+    AWSMarketplaceSubscribers:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.tableNames.USER_TABLE}
+        AttributeDefinitions:
+          - AttributeName: customerIdentifier
+            AttributeType: S
+        KeySchema:
+          - AttributeName: customerIdentifier
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    AWSMarketplaceMeteringRecords:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: arc-saas-mp-metering-records-${self:custom.config.stage}
+        AttributeDefinitions:
+          - AttributeName: customerIdentifier
+            AttributeType: S
+          - AttributeName: create_timestamp
+            AttributeType: N
+        KeySchema:
+          - AttributeName: customerIdentifier
+            KeyType: HASH
+          - AttributeName: create_timestamp
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    AWSMarketplaceEntitlementQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: arc-saas-mp-entitlement-messages-${self:provider.stage}
+        DelaySeconds: 0
+        MessageRetentionPeriod: 345600 # 4 days
+        VisibilityTimeout: 30
+        # RedrivePolicy: 
+        #   deadLetterTargetArn: 
+        #     Fn::GetAtt:
+        #       - AWSMarketplaceEntitlementDLQueue
+        #       - Arn
+    AWSMarketplaceEntitlementDLQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: arc-saas-mp-entitlement-messages-dlq-${self:provider.stage}
+    AWSMarketplaceEntitlementQueuePolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        Queues:
+          - Ref: AWSMarketplaceEntitlementQueue
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-mp-subscription'
+              Effect: Allow
+              Principal:
+                AWS: '*'
+              Resource:
+                Fn::GetAtt:
+                - AWSMarketplaceEntitlementQueue
+                - Arn
+              Action: 'SQS:SendMessage'
+              Condition:
+                ArnLike:
+                  'aws:SourceArn': "arn:aws:sns:us-east-1:287250355862:*"
+    QueueSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        TopicArn: ${self:custom.config.EntitlementTopicARN}
+        Endpoint:
+          Fn::GetAtt:
+            - AWSMarketplaceEntitlementQueue
+            - Arn
+        Protocol: sqs
+        RawMessageDelivery: false  
+    SupportSNS:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: 'ARC SAAS MP Support SNS'
+        TopicName: arc-saas-mp-SupportSNSTopic-${self:custom.config.stage}

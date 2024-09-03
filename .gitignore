@@ -1,0 +1,12 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+**/config.json
+**/package-lock.json
+**/bin/
+**/.DS_Store
+*test*
+web/config.js
