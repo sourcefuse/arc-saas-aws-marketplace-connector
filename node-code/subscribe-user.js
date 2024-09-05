@@ -53,7 +53,7 @@ exports.handler = async (event) => {
       };
       await dynamodb.putItem(dynamoDbParams).promise();
       let body = EMAIL_TEMPLATE.CUSTOMER_ONBOARD;
-      body = body.split("##contactPerson##").join(contactPerson);
+      body = body.split("##contactPerson##").join(firstName+" "+lastName);
       const subject = EMAIL_SUBJECTS.CUSTOMER_ONBOARD;
       await SendEmail(contactEmail, subject, body);
     }

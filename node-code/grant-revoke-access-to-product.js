@@ -14,7 +14,6 @@ exports.handler = async (event, context) => {
     const oldImage = AWS.DynamoDB.Converter.unmarshall(record.dynamodb.OldImage);
     const newImage = AWS.DynamoDB.Converter.unmarshall(record.dynamodb.NewImage);
 
-    // eslint-disable-next-line no-console
     logger.debug('OldImage', { 'data': oldImage });
     logger.debug('NewImage', { 'data': newImage });
     /*
