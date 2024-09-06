@@ -3,3 +3,9 @@ module.exports.MESSAGE_ACTION = {
   SUBSCRIBE_SUCCESS: "subscribe-success",
   UNSUBSCRIBE_SUCCESS: "unsubscribe-success"
 }
+
+module.exports.ENV_VARS = {
+  region: process.env.region || "us-east-1",
+  LOG_LEVEL: process.env.LOG_LEVEL || "debug",
+  EventBusName: process.env.eventBusName || null,
+}

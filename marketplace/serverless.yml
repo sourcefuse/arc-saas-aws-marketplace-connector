@@ -71,7 +71,7 @@ functions:
           startingPosition: LATEST
           arn:
             Fn::GetAtt:
-              - AWSMarketplaceSubscribers
+              - AWSMarketplaceSubscribersTable
               - StreamArn
   SubscribeUser:
     handler: subscribe-user.handler
@@ -101,7 +101,7 @@ functions:
 
 resources: # CloudFormation template syntax from here on.
   Resources:
-    AWSMarketplaceSubscribers:
+    AWSMarketplaceSubscribersTable:
       Type: AWS::DynamoDB::Table
       DeletionPolicy: Retain
       Properties:
@@ -109,9 +109,13 @@ resources: # CloudFormation template syntax from here on.
         AttributeDefinitions:
           - AttributeName: customerIdentifier
             AttributeType: S
+          - AttributeName: productCode
+            AttributeType: S
         KeySchema:
           - AttributeName: customerIdentifier
             KeyType: HASH
+          - AttributeName: productCode
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

@@ -16,7 +16,7 @@
   <div class="container" style="width: 100% !important;">
     <div id="alert"></div>
     <form class="form-signin" method="POST" enctype="multipart/form-data" style="display: inline;width:100%;">
-      <img class="mb-4" src="logo.jpeg" alt="" width="72" height="72">
+      <img class="mb-4" src="logo.jpeg" alt="" width="300">
       <h1 class="h3 mb-3 font-weight-normal">Please enter your contact details</h1>
       <div style="float:left;width:100%;margin-top:10px;">
         <div style="float:left;width:50%;">
@@ -55,17 +55,24 @@
       <div style="float:left;width:100%;margin-top:10px;">
         <div style="float:left;width:50%;">
           <label for="companyName" class="sr-only">Company Name</label>
-      <input type="text" name="companyName" class="form-control" placeholder="Company Name" required autofocus>
+          <input type="text" name="companyName" class="form-control" placeholder="Company Name" required autofocus>
         </div>
         <div style="float:left;width:50%;">
           <label for="preferredSubdomain" class="sr-only">Preffered Subdomain</label>
-      <input type="text" name="preferredSubdomain" class="form-control" placeholder="Prefferd Subdomain" autofocus>
+          <input type="text" name="preferredSubdomain" class="form-control" placeholder="Prefferd Subdomain" autofocus>
         </div>
       </div>
+
       <div style="float:left;width:100%;margin-top:10px;">
+        <div style="float:left;width:100%;">
+          <label for="address" class="sr-only">Address</label>
+          <textarea name="address" class="form-control" placeholder="Address" style="width:95%;" autofocus></textarea>
+        </div>
+      </div>
+      <div style="float:left;width:95%;margin-top:10px;">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
       </div>
-      <p class="mt-5 mb-3 text-muted">&copy; 2024</p>
+      <p class="mt-5 mb-3 text-muted" style="width:100% !important;display: inline;float:left;">&copy; 2024</p>
     </form>
   </div>
   <!-- Optional JavaScript -->

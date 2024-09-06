@@ -8,6 +8,8 @@ provider:
   stage: dev
   environment:
     LOG_LEVEL: debug
+    region: ${self:provider.region}
+    eventBusName: sf-arc-saas-marketplace-eventbus
   iam:
     role:
       statements:

@@ -39,6 +39,10 @@ exports.handler = async (event, context) => {
       entitlementUpdated = true;
     }
 
+    if (typeof oldImage.entitlement == "undefined") {
+      entitlementUpdated = true;
+    }
+
     logger.debug('grantAccess', { 'data': grantAccess });
     logger.debug('revokeAccess:', { 'data': revokeAccess });
     logger.debug('entitlementUpdated', { 'data': entitlementUpdated });
