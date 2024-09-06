@@ -1,0 +1,21 @@
+{
+  "Records": [
+    {
+      "messageId": "eb7bc552-7ad5-4799-81ca-59c18a856104",
+      "receiptHandle": "AQEBL2PJ1j3293igia/2ZdXKBO4ozAP0lxOqRJPYp6oRH2Wt49KhjvEcW7BddtsbHe3/yvBv9BWF7qqY4tWEXcAsloptcDMr8hlj2CVg5A9x5kNOHSkVTWbTLNAAAouprwLgAXBNxDH8admIHGkDTtSJ3yIZr5ElNyphThOS70uVLbBCub9XWej65QJxjNQbyCXHvUguQm8r6UzjDhvgXA8plE2FxFq4deIJ6Up7oeuyWlGYh+0FzFBuhNBXK6OU403hQudLLd/3ZAyRUkszCiwG2R11ht2FcjR/JZGaIMlZeHI2xIEz26ugzOJ24G8Az2+TgXHnFQD955plxYCqRp0v2T+HoOzVv+E421h00EdGWgTQaw4RxUX46LTbj57YaAIgIzAKINs6OMkDcrwX4jcH0JrIhMT9ifIbanAXTF7lewo=",
+      "body": "{\n  \"Type\" : \"Notification\",\n  \"MessageId\" : \"c475a9b8-c93f-5d10-a882-f6ec7d1b92fd\",\n  \"TopicArn\" : \"arn:aws:sns:us-east-1:945019477776:arc-saas-mp-SupportSNSTopic-dev\",\n  \"Subject\" : \"AWS Marketplace customer change of subscription\",\n  \"Message\" : \"entitlement-updated# {\\\"customerAWSAccountID\\\":\\\"945019477776\\\",\\\"country\\\":\\\"India\\\",\\\"lastName\\\":\\\"Gupta\\\",\\\"preferredSubdomain\\\":\\\"vishal\\\",\\\"successfully_subscribed\\\":true,\\\"created\\\":\\\"1725545289131\\\",\\\"companyName\\\":\\\"Sourcefuse Technologies\\\",\\\"entitlement\\\":\\\"{\\\\\\\"Entitlements\\\\\\\":[{\\\\\\\"ProductCode\\\\\\\":\\\\\\\"7rxv3phy3zjgm1sz76nzmsap0\\\\\\\",\\\\\\\"Dimension\\\\\\\":\\\\\\\"Advance\\\\\\\",\\\\\\\"CustomerIdentifier\\\\\\\":\\\\\\\"LBajo9HqLgp\\\\\\\",\\\\\\\"Value\\\\\\\":{\\\\\\\"IntegerValue\\\\\\\":1},\\\\\\\"ExpirationDate\\\\\\\":\\\\\\\"2024-10-05T10:30:22.001Z\\\\\\\"}]}\\\",\\\"zipcode\\\":\\\"201301\\\",\\\"firstName\\\":\\\"Vishal\\\",\\\"productCode\\\":\\\"7rxv3phy3zjgm1sz76nzmsap0\\\",\\\"subscription_expired\\\":false,\\\"customerIdentifier\\\":\\\"LBajo9HqLgp\\\",\\\"contactPhone\\\":\\\"9811258678\\\",\\\"email\\\":\\\"vishal.gupta@sourcefuse.com\\\"}\",\n  \"Timestamp\" : \"2024-09-06T07:40:20.910Z\",\n  \"SignatureVersion\" : \"1\",\n  \"Signature\" : \"TJl0f9f4DbMnUDSkMYosV+EuMWB1nMo1q5CzrDSAV9suF3rWwKGhRJ8xr/oArk3U701Jr5K+ahirKdNwbGBqJGwAjyYip5Yl6hVXR5wfZUmbYocnL71dCDRYJG7xjM6j1pceE8+jEoHQxmY/EXZAKDU5QKBWGx/xamU9AOD+kKzP4ly32Rl0S+Ha8EdknkPI3IB/kqxF2dqWzf0Zm2RfhBJ3Md5nOH0nEa8j7ziItP13xDwdNhEzib2l3Cyw4Fzz0AGXnJzxFHz6gFzI6m94vRBeoqur8c/4t6KF/M+OPtcMp+vJ3MX89CxPo6WxvFUMTYaREzQx4z1+G97+J8PQBA==\",\n  \"SigningCertURL\" : \"https://sns.us-east-1.amazonaws.com/SimpleNotificationService-60eadc530605d63b8e62a523676ef735.pem\",\n  \"UnsubscribeURL\" : \"https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:945019477776:arc-saas-mp-SupportSNSTopic-dev:02b7d863-2431-4e19-9c42-5a2ffed59d82\"\n}",
+      "attributes": {
+        "ApproximateReceiveCount": "1",
+        "AWSTraceHeader": "Root=1-66dab1e2-3b38c59ad4a63a0b63882a27;Parent=34655a5a336ff02d;Sampled=0;Lineage=1:53ff3f8d:0",
+        "SentTimestamp": "1725608420950",
+        "SenderId": "AIDAIT2UOQQY3AUEKVGXU",
+        "ApproximateFirstReceiveTimestamp": "1725608420957"
+      },
+      "messageAttributes": {},
+      "md5OfBody": "8082fcc4e3ebecf752307485f20d0515",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:471112653618:arc-saas-mp-subscriber-messages-dev",
+      "awsRegion": "us-east-1"
+    }
+  ]
+}

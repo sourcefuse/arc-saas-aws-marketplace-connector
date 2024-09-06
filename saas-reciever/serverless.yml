@@ -1,0 +1,63 @@
+service: aws-marketplace-reciever
+custom:
+  MP_SNS_TOPIC_ARN: arn:aws:sns:us-east-1:945019477776:arc-saas-mp-SupportSNSTopic-dev
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: dev
+  environment:
+    LOG_LEVEL: debug
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action: "*"
+          Resource: "*"
+
+functions:
+  ProcessMarketplaceLambda:
+    handler: index.handler
+    events:
+      - sqs:
+          arn: !GetAtt AWSMarketplaceSubscriberQueue.Arn
+
+resources: # CloudFormation template syntax from here on.
+  Resources:
+    AWSMarketplaceSubscriberQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: arc-saas-mp-subscriber-messages-${self:provider.stage}
+        DelaySeconds: 0
+        MessageRetentionPeriod: 345600 # 4 days
+        VisibilityTimeout: 30
+    AWSMarketplaceSubscriberQueuePolicy:
+        Type: AWS::SQS::QueuePolicy
+        Properties:
+          Queues:
+            - Ref: AWSMarketplaceSubscriberQueue
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: 'allow-mp-subscription'
+                Effect: Allow
+                Principal:
+                  AWS: '*'
+                Resource:
+                  Fn::GetAtt:
+                  - AWSMarketplaceSubscriberQueue
+                  - Arn
+                Action: 'SQS:SendMessage'
+                Condition:
+                  ArnLike:
+                    'aws:SourceArn': "arn:aws:sns:us-east-1:945019477776:*"
+    AWSMarketplaceSubscriberQueueSubscription:
+        Type: AWS::SNS::Subscription
+        Properties:
+          TopicArn: ${self:custom.MP_SNS_TOPIC_ARN}
+          Endpoint:
+            Fn::GetAtt:
+              - AWSMarketplaceSubscriberQueue
+              - Arn
+          Protocol: sqs
+          RawMessageDelivery: false
