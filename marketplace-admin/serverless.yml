@@ -1,0 +1,53 @@
+service: aws-marketplace-integration-admin
+
+custom:
+  cors:
+    origin: "*"
+    headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - x-amz-id-token
+      - Cache-Control
+      - Pragma
+      - Expires
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: dev
+  environment:
+    mp_region: us-east-1
+    LOG_LEVEL: debug
+    
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action: "*"
+          Resource: "*"
+  apiGateway:    
+    apiKeys:
+      - mp_integration_admin_${self:provider.stage}
+    usagePlan:
+      quota:
+        limit: 10000
+        offset: 0
+        period: DAY
+      throttle:
+        burstLimit: 5
+        rateLimit: 5
+
+functions:
+  AdminJobs:
+    handler: admin.handler
+    events:
+      - http:
+          path: admin
+          method: post
+          private: true
+          cors: ${self:custom.cors}

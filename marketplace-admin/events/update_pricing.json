@@ -1,0 +1,9 @@
+{
+  "type": "updateDimensions",
+  "entityId": "prod-tadjil35oo7bu",
+  "data": [{
+    "key": "Test1",
+    "name": "Test Tier 2",
+    "description": "Test Tier 2"
+  }]
+}

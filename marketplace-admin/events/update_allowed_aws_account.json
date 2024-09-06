@@ -1,0 +1,7 @@
+{
+  "type": "updateAllowedAWSAccount",
+  "entityId": "prod-2oonz4fj3zdiu",
+  "data": {
+    "allowedAWSAccounts": ["XXXXXXXXXXX"]
+  }
+}

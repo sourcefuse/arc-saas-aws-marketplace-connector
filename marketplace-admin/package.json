@@ -1,0 +1,33 @@
+{
+  "name": "aws-marketplace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc --outDir bin",
+    "make-config": "aws ssm get-parameter --name /mp/poc/MarketplaceDevConfig --query 'Parameter' | jq -rc '.Value ' > config.json",
+    "upload-config": "aws ssm put-parameter --name '/mp/poc/MarketplaceDevConfig' --type 'String'  --value 'file://config.json' --overwrite",
+    "deploy": "npm run tsc && npm run s3-sync && sls deploy",
+    "s3-sync": "export UIBucketName=$(jq -rc .UIBucketName < config.json) && cd ../web && aws s3 cp --recursive ./ s3://$UIBucketName --acl public-read"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-marketplace-catalog": "3.629.0",
+    "aws-sdk": "2.1678.0",
+    "axios": "1.7.5",
+    "nodemailer": "6.9.14",
+    "winston": "3.14.2"
+  },
+  "devDependencies": {
+    "serverless-ssm-fetch": "2.0.0",
+    "aws-sdk-client-mock": "2.1.1",
+    "aws-sdk-mock": "4.5.0",
+    "axios-mock-adapter": "1.17.0",
+    "chai": "4.2.0",
+    "mocha": "6.1.3",
+    "nyc": "15.0.1",
+    "sinon": "7.3.2"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "updateProductInfo",
+  "entityId": "prod-lp5dq7gziiuyi",
+  "data": {
+    "LogoUrl": "https://test-bucket-sf-marketplace.s3.ap-south-1.amazonaws.com/sf.jpeg",
+    "ShortDescription": "This is a test Product",
+    "LongDescription": "This is Long Description",
+    "SupportDescription": "Contact us at support@sourcefuse.com or visit https://sourcefuse.com",
+    "SearchKeywords": [
+      "arc",
+      "saas"
+    ],
+    "Sku": "test-prod-123",
+    "ProductTitle": "SAAS Product 26 July",
+    "Highlights": [
+      "Testing"
+    ],
+    "Categories": [
+      "Backup & Recovery"
+    ]
+  }
+}

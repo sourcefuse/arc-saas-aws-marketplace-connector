@@ -1,0 +1,18 @@
+{
+  "type": "addDimension",
+  "entityId": "prod-lp5dq7gziiuyi",
+  "data": {
+    "key": "test4",
+    "description": "Test 4 Tier",
+    "name": "Test4 Tier",
+    "price": "0.001",
+    "pricingModel": "Contract",
+    "type": [
+      "Entitled"
+    ],
+    "unit": "Units",
+    "currencyCode": "USD",
+    "multipleDimensionSelection": "Disallowed",
+    "quantityConfiguration": "Disallowed"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "updateLegalTerm",
+  "entityId": "offer-25tc6r6c6tc64",
+  "data": {
+    "type": "CustomEula",
+    "url": "https://test-bucket-sf-marketplace.s3.ap-south-1.amazonaws.com/eula_sample.pdf"
+  }
+}

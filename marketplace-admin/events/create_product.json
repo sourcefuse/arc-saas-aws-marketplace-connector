@@ -1,0 +1,6 @@
+{
+  "type": "createProduct",
+  "data":{
+    "productTitle": "TesT Product 5"
+  }
+}

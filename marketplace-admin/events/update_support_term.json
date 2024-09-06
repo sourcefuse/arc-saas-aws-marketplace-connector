@@ -1,0 +1,5 @@
+{
+  "type": "updateSupportTerm",
+  "entityId": "offer-25tc6r6c6tc64",
+  "data": "This is a Refund Policy updating via lambda"
+}

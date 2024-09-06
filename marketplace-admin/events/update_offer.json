@@ -1,0 +1,8 @@
+{
+  "type":"updateOfferInformation",
+  "entityId": "offer-ee2hplkgalwye",
+  "data":{
+    "name": "Offer Created",
+    "description": "Test offer Release"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "updateFulfilment",
+  "entityId": "prod-lp5dq7gziiuyi",
+  "data": {
+    "url": "https://xizo4ods0e.execute-api.ap-south-1.amazonaws.com/dev/register"
+  }
+}

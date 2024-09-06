@@ -1,0 +1,6 @@
+{
+  "type": "getProductDetailsByTitle",
+  "data": {
+    "title": "Product for ARC SAAS"
+  }
+}

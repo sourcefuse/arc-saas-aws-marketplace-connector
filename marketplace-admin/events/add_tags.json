@@ -1,0 +1,12 @@
+{
+  "type": "addTags",
+  "entityARN": "arn:aws:aws-marketplace:us-east-1:XXXXXX:AWSMarketplace/SaaSProduct/prod-2oonz4fj3zdiu",
+  "data": {
+    "tags": [
+      {
+        "Key": "CreatedBy",
+        "Value": "Sourcefuse Technologies"
+      }
+    ]
+  }
+}

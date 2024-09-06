@@ -1,0 +1,8 @@
+{
+  "type": "updateLegalTerm",
+  "entityId": "offer-ee2hplkgalwye",
+  "data": {
+    "type": "StandardEula",
+    "version": "2022-07-14"
+  }
+}
