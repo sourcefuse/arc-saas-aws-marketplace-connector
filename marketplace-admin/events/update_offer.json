@@ -1,7 +1,7 @@
 {
-  "type":"updateOfferInformation",
+  "type": "updateOfferInformation",
   "entityId": "offer-ee2hplkgalwye",
-  "data":{
+  "data": {
     "name": "Offer Created",
     "description": "Test offer Release"
   }

@@ -4,6 +4,4 @@ const { AWS_MP } = require("../constants");
 const { mp_region: region } = AWS_MP;
 AWS.config.update({ region });
 
-module.exports = () => {
-  return new AWS.MarketplaceCatalog()
-}
+module.exports = new AWS.MarketplaceCatalog()

@@ -45,6 +45,7 @@ exports.handler = async (event) => {
         TableName: process.env.userTable,
         Key: {
           customerIdentifier: { S: message['customer-identifier'] },
+          productCode:{S: message['product-code']}
         },
         UpdateExpression: 'set entitlement = :e, successfully_subscribed = :ss, subscription_expired = :se',
         ExpressionAttributeValues: {

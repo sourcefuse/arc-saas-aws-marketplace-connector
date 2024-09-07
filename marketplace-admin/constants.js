@@ -32,7 +32,6 @@ module.exports.STRINGS = {
   ACTION_LIST_PRODUCTS: "listProducts"
 }
 
-
 module.exports.CHANGE_TYPE = {
   CREATE_PRODUCT: "CreateProduct",
   CREATE_OFFER: "CreateOffer",
@@ -58,4 +57,11 @@ module.exports.EULA_TYPE = {
 module.exports.ENTITY_TYPE = {
   PRODUCT: "SaaSProduct@1.0",
   OFFER: "Offer@1.0",
+}
+
+module.exports.TERMS_TYPE = {
+  LEGAL: "LegalTerm",
+  SUPPORT: "SupportTerm",
+  PRICING_UPFRONT: "ConfigurableUpfrontPricingTerm",
+  RENEWAL: "RenewalTerm"
 }

@@ -39,15 +39,18 @@ exports.handler = async (event, context) => {
       entitlementUpdated = true;
     }
 
-    if (typeof oldImage.entitlement == "undefined") {
-      entitlementUpdated = true;
+    let firstTimeUser = false;
+    if (typeof oldImage == "object" && Object.keys(oldImage).length == 0) {
+      firstTimeUser = true;
     }
+
+
 
     logger.debug('grantAccess', { 'data': grantAccess });
     logger.debug('revokeAccess:', { 'data': revokeAccess });
     logger.debug('entitlementUpdated', { 'data': entitlementUpdated });
 
-    if (grantAccess || revokeAccess || entitlementUpdated) {
+    if (grantAccess || revokeAccess || entitlementUpdated || firstTimeUser) {
       let message = '';
       let subject = '';
       if (grantAccess) {
@@ -59,6 +62,9 @@ exports.handler = async (event, context) => {
       } else if (entitlementUpdated) {
         subject = 'AWS Marketplace customer change of subscription';
         message = `${MESSAGE_ACTION.ENTITLEMENT_UPDATED}# ${JSON.stringify(newImage)}`;
+      } else if (firstTimeUser) {
+        subject = 'AWS Marketplace customer onboarded';
+        message = `${MESSAGE_ACTION.ENTITLEMENT_CREATED}# ${JSON.stringify(newImage)}`;
       }
 
       const SNSparams = {

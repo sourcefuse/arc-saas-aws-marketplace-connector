@@ -145,11 +145,6 @@ resources: # CloudFormation template syntax from here on.
         DelaySeconds: 0
         MessageRetentionPeriod: 345600 # 4 days
         VisibilityTimeout: 30
-        # RedrivePolicy: 
-        #   deadLetterTargetArn: 
-        #     Fn::GetAtt:
-        #       - AWSMarketplaceEntitlementDLQueue
-        #       - Arn
     AWSMarketplaceEntitlementDLQueue:
       Type: AWS::SQS::Queue
       Properties:
@@ -174,10 +169,19 @@ resources: # CloudFormation template syntax from here on.
               Condition:
                 ArnLike:
                   'aws:SourceArn': "arn:aws:sns:us-east-1:287250355862:*"
-    QueueSubscription:
+    QueueSubscription1:
       Type: AWS::SNS::Subscription
       Properties:
         TopicArn: ${self:custom.config.EntitlementTopicARN}
+        Endpoint:
+          Fn::GetAtt:
+            - AWSMarketplaceEntitlementQueue
+            - Arn
+        Protocol: sqs
+    QueueSubscription2:
+      Type: AWS::SNS::Subscription
+      Properties:
+        TopicArn: arn:aws:sns:us-east-1:287250355862:aws-mp-entitlement-notification-22q98z822t42qnulk0kf3302q
         Endpoint:
           Fn::GetAtt:
             - AWSMarketplaceEntitlementQueue

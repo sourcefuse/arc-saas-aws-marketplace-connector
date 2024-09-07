@@ -2,14 +2,13 @@
 const AWS = require('aws-sdk');
 const { EMAIL_SUBJECTS, EMAIL_TEMPLATE, ENV_VARS } = require("./constants");
 const { aws_region } = ENV_VARS;
-const { SendEmail, SendResponse } = require("./utils");
+const { SendEmail, SendResponse, logger } = require("./utils");
 
 const marketplacemetering = new AWS.MarketplaceMetering({ apiVersion: '2016-01-14', region: aws_region });
-const marketplaceEntitlementService = new AWS.MarketplaceEntitlementService({});
 const dynamodb = new AWS.DynamoDB({ apiVersion: '2012-08-10', region: aws_region });
 
 exports.handler = async (event) => {
-  console.log(event.body);
+  logger.info("Event body", { body: event.body });
   const {
     // Accept form inputs from ../web/index.html
     regToken,
@@ -30,47 +29,49 @@ exports.handler = async (event) => {
       const resolveCustomerParams = {
         RegistrationToken: regToken,
       };
+      logger.debug("Params for Resolve Customer", { resolveCustomerParams });
       const resolveCustomerResponse = await marketplacemetering
         .resolveCustomer(resolveCustomerParams)
         .promise();
 
       const { CustomerIdentifier, ProductCode, CustomerAWSAccountId } = resolveCustomerResponse;
-      const entitlementResponse = await marketplaceEntitlementService
-        .getEntitlements({
-          ProductCode,
-          Filter: {
-            CUSTOMER_IDENTIFIER: [CustomerIdentifier],
-          },
-        }).promise();
-
       const datetime = new Date().getTime().toString();
       const dynamoDbParams = {
         TableName: process.env.userTable,
-        Item: {
-          companyName: { S: companyName },
-          firstName: { S: firstName },
-          lastName: { S: lastName },
-          contactPhone: { S: contactPhone },
-          email: { S: contactEmail },
-          country: { S: country },
-          zipcode: { S: zipcode },
-          address: { S: address },
-          preferredSubdomain: { S: preferredSubdomain },
+        Key: {
           customerIdentifier: { S: CustomerIdentifier },
-          productCode: { S: ProductCode },
-          customerAWSAccountID: { S: CustomerAWSAccountId },
-          created: { S: datetime },
-          entitlement: { S: JSON.stringify(entitlementResponse) }
+          productCode:{S: ProductCode}
         },
+        UpdateExpression: 'set companyName = :s1, firstName = :s2, lastName = :s3,'+
+        'contactPhone = :s4, email = :s5, country = :s6, zipcode = :s7, address = :s8, preferredSubdomain = :s9,'+
+        'customerAWSAccountID = :s10, created = :s11',
+        ExpressionAttributeValues: {
+          ':s1': { S:  companyName},
+          ':s2': { S:  firstName},
+          ':s3': { S:  lastName},
+          ':s4': { S:  contactPhone},
+          ':s5': { S:  contactEmail},
+          ':s6': { S:  country},
+          ':s7': { S:  zipcode},
+          ':s8': { S:  address},
+          ':s9': { S:  preferredSubdomain},
+          ':s10': { S:  CustomerAWSAccountId},
+          ':s11': { S:  datetime},
+        },
+        ReturnValues: 'UPDATED_NEW',
       };
-      await dynamodb.putItem(dynamoDbParams).promise();
+      logger.debug("DynamoDB params", { dynamoDbParams });
+      await dynamodb.updateItem(dynamoDbParams).promise();
+      
+      // Sending mail to Registered USER.
       let body = EMAIL_TEMPLATE.CUSTOMER_ONBOARD;
-      body = body.split("##contactPerson##").join(firstName + " " + lastName);
       const subject = EMAIL_SUBJECTS.CUSTOMER_ONBOARD;
+
+      body = body.split("##contactPerson##").join(firstName + " " + lastName);
       await SendEmail(contactEmail, subject, body);
     }
     catch (error) {
-      console.error(error);
+      logger.error("Error", {error});
     }
   }
   return SendResponse(event.body);
