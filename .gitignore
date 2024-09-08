@@ -8,6 +8,5 @@ jspm_packages
 **/package-lock.json
 **/bin/
 **/.DS_Store
-*test*
 web/config.js
 *_bak*
