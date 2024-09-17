@@ -5,7 +5,6 @@
     "key": "test4",
     "description": "Test 4 Tier",
     "name": "Test4 Tier",
-    "price": "0.001",
     "pricingModel": "Contract",
     "type": [
       "Entitled"
@@ -13,6 +12,12 @@
     "unit": "Units",
     "currencyCode": "USD",
     "multipleDimensionSelection": "Disallowed",
-    "quantityConfiguration": "Disallowed"
+    "quantityConfiguration": "Disallowed",
+    "pricing": {
+      "P1M": "0.001",
+      "P12M": "0.012",
+      "P24M": "0.024",
+      "P36M": "0.036"
+    }
   }
 }

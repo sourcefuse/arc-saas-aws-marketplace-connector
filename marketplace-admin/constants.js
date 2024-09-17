@@ -29,7 +29,8 @@ module.exports.STRINGS = {
   ACTION_UPDATE_SUPPORT_TERM: "updateSupportTerm",
   ACTION_UPDATE_OFFER_INFORMATION: "updateOfferInformation",
   ACTION_UPDATE_DIMENSION: "updateDimensions",
-  ACTION_LIST_PRODUCTS: "listProducts"
+  ACTION_LIST_PRODUCTS: "listProducts",
+  ACTION_DESCRIBE_CHANGESET: "describeChangeset"
 }
 
 module.exports.CHANGE_TYPE = {

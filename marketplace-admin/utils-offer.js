@@ -214,22 +214,24 @@ module.exports.addDimension = async (ProductId, dimension) => {
       PricingModel: dimension.pricingModel,
       Terms: []
     };
-
     let updateTerm = {
       "Type": TERMS_TYPE.PRICING_UPFRONT,
       "CurrencyCode": dimension.currencyCode,
-      "RateCards": [{
+      "RateCards": []
+    };
+    for (const durationPM of Object.keys(dimension.pricing)) {
+      updateTerm.RateCards.push({
         "Selector": {
           "Type": "Duration",
-          "Value": "P1M"
+          "Value": durationPM
         },
         "Constraints": {
           "MultipleDimensionSelection": dimension.multipleDimensionSelection,
           "QuantityConfiguration": dimension.quantityConfiguration
         },
         "RateCard": []
-      }]
-    };
+      })
+    }
 
     if (terms.length > 0) {
       for (const term of terms) {
@@ -239,10 +241,13 @@ module.exports.addDimension = async (ProductId, dimension) => {
         }
       }
     }
-    updateTerm.RateCards[0].RateCard.push({
-      "DimensionKey": dimension.key,
-      "Price": dimension.price
-    });
+    for (const k in updateTerm.RateCards) {
+      const selector = updateTerm.RateCards[k].Selector.Value;
+      updateTerm.RateCards[k].RateCard.push({
+        "DimensionKey": dimension.key,
+        "Price": dimension.pricing[selector]
+      });
+    }
 
     termParam.Terms.push(updateTerm);
     logger.debug("Adding Pricing Dimension", { dimensionParam });

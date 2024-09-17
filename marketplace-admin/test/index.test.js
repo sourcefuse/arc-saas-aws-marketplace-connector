@@ -27,3 +27,6 @@ require("./product_update_pricing.test");
 require("./product_update_allowed_aws_account.test");
 require("./product_update_fulfilment.test");
 require("./product_update_info.test");
+
+// Describe Changeset
+require("./describe_changeset.test");

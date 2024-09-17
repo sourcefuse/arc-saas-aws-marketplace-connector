@@ -26,6 +26,7 @@ const {
   updateFulfilmentURL
 } = require("./utils-product");
 
+const { describeChangeSet } = require("./utils-changeset");
 const {
   addTags,
   deleteTags,
@@ -64,6 +65,9 @@ exports.handler = async (event) => {
         break;
       case STRINGS.ACTION_LIST_PRODUCTS.toLowerCase():
         result = await listProducts("");
+        break;
+      case STRINGS.ACTION_DESCRIBE_CHANGESET.toLowerCase():
+        result = await describeChangeSet(request.data.catalog, request.data.changeSetId);
         break;
 
       // Update api for Products
