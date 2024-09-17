@@ -244,7 +244,7 @@ module.exports.addDimension = async (ProductId, dimension) => {
     for (const k in updateTerm.RateCards) {
       const selector = updateTerm.RateCards[k].Selector.Value;
       updateTerm.RateCards[k].RateCard.push({
-        "DimensionKey": dimension.key,
+        "DimensionKey": dimension.key.replace(/\s/g, ''),
         "Price": dimension.pricing[selector]
       });
     }
