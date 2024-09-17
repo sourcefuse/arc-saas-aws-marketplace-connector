@@ -38,3 +38,10 @@ module.exports.EMAIL_TEMPLATE = {
   CUSTOMER_ONBOARD: '"<!DOCTYPE html><html><head><title>Welcome ##contactPerson##!<\/title><\/head><body><h1>Welcome ##contactPerson## !<\/h1><p>Thanks for purchasing<\/p><p>We\u2019re thrilled to have you on board. Our team is hard at work setting up your account, please expect to hear from a member of our customer success team soon<\/p><\/body><\/html>',
   ADMIN_ENTITLEMENT_UPDATED: '"<!DOCTYPE html><html><head><title>ENTITLEMENT Updated from ##contactPerson##!<\/title><\/head><body><h1>Entitlement Updated from ##contactPerson## !<\/h1><\/body><\/html>'
 }
+
+module.exports.SUBJECTS = {
+  GRANT_ACCESS: "New AWS Marketplace Subscriber",
+  REVOKE_ACCESS: "AWS Marketplace customer end of subscription",
+  ENTITLEMENT_UPDATED: "AWS Marketplace customer change of subscription",
+  ONBOARDED: "AWS Marketplace customer onboarded"
+}

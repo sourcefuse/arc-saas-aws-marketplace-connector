@@ -5,7 +5,7 @@ const { expect } = require('chai');
 const { handler } = require("../admin");
 const { checkHeaders } = require("./utils");
 const CatalogService = require("../services/catalog-service");
-const { ENTITY_TYPE } = require("../constants");
+
 let sinonSandbox
 describe('Testing the Admin lambda for Describe Changeset', () => {
   before(() => {

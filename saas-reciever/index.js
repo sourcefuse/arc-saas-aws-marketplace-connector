@@ -9,6 +9,7 @@ exports.handler = async (event) => {
   event.Records.map(record => {
     try {
       let { body } = record;
+      console.log("body", body);
       body = JSON.parse(body);
       const [action, message] = body.Message.split("# ");
       const userDetails = JSON.parse(message);
@@ -17,7 +18,7 @@ exports.handler = async (event) => {
       switch (action.toLowerCase()) {
         case MESSAGE_ACTION.ENTITLEMENT_UPDATED.toLowerCase():
           const newPlan = userDetails.entitlement.Entitlements[0]["Dimension"];
-          console.log("Customer Choose new plan:-", newPlan);
+          console.log("Customer Choose new plan:-", newPlan.split("_")[0]);
           const tenantRegistrationData = {
             "customer": {
               "firstName": userDetails.firstName,

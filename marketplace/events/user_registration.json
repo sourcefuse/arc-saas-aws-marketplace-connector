@@ -1,0 +1,93 @@
+{
+    "Records": [
+        {
+            "awsRegion": "us-east-1",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1726576749,
+                "Keys": {
+                    "customerIdentifier": {
+                        "S": "iW3nVQJ24oW"
+                    },
+                    "productCode": {
+                        "S": "147y8r3e19o72fl9bb921stoa"
+                    }
+                },
+                "NewImage": {
+                    "address": {
+                        "S": "6/134\nPalm Olympia"
+                    },
+                    "companyName": {
+                        "S": "Sourcefuse Arc SAAS"
+                    },
+                    "contactPhone": {
+                        "S": "09811258678"
+                    },
+                    "country": {
+                        "S": "India"
+                    },
+                    "created": {
+                        "S": "1726576749255"
+                    },
+                    "customerAWSAccountID": {
+                        "S": "471112653618"
+                    },
+                    "customerIdentifier": {
+                        "S": "iW3nVQJ24oW"
+                    },
+                    "email": {
+                        "S": "Vishal.gupta.sf@gmail.com"
+                    },
+                    "entitlement": {
+                        "S": "{\"Entitlements\":[{\"ProductCode\":\"147y8r3e19o72fl9bb921stoa\",\"Dimension\":\"advance_1726572361085\",\"CustomerIdentifier\":\"iW3nVQJ24oW\",\"Value\":{\"IntegerValue\":1},\"ExpirationDate\":\"2024-10-17T12:37:26.490Z\"}]}"
+                    },
+                    "firstName": {
+                        "S": "Vishal"
+                    },
+                    "lastName": {
+                        "S": "gupta"
+                    },
+                    "preferredSubdomain": {
+                        "S": "vishal"
+                    },
+                    "productCode": {
+                        "S": "147y8r3e19o72fl9bb921stoa"
+                    },
+                    "subscription_expired": {
+                        "BOOL": false
+                    },
+                    "successfully_subscribed": {
+                        "BOOL": true
+                    },
+                    "zipcode": {
+                        "S": "201301"
+                    }
+                },
+                "OldImage": {
+                    "customerIdentifier": {
+                        "S": "iW3nVQJ24oW"
+                    },
+                    "entitlement": {
+                        "S": "{\"Entitlements\":[{\"ProductCode\":\"147y8r3e19o72fl9bb921stoa\",\"Dimension\":\"advance_1726572361085\",\"CustomerIdentifier\":\"iW3nVQJ24oW\",\"Value\":{\"IntegerValue\":1},\"ExpirationDate\":\"2024-10-17T12:37:26.490Z\"}]}"
+                    },
+                    "productCode": {
+                        "S": "147y8r3e19o72fl9bb921stoa"
+                    },
+                    "subscription_expired": {
+                        "BOOL": false
+                    },
+                    "successfully_subscribed": {
+                        "BOOL": true
+                    }
+                },
+                "SequenceNumber": "52235200000000103109674578",
+                "SizeBytes": 952,
+                "StreamViewType": "NEW_AND_OLD_IMAGES"
+            },
+            "eventID": "488b31c8b23df5b64d8bf42f3c2d6a3e",
+            "eventName": "MODIFY",
+            "eventSource": "aws:dynamodb",
+            "eventSourceARN": "arn:aws:dynamodb:us-east-1:XXXXXXX:table/arc-saas-mp-subscriber-dev/stream/2024-09-06T11:48:47.431",
+            "eventVersion": "1.1"
+        }
+    ]
+}

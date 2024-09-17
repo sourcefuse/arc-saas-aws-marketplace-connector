@@ -4,7 +4,7 @@
   "description": "",
   "main": "start.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/index.test.js",
     "tsc": "tsc --outDir bin",
     "make-config": "aws ssm get-parameter --name /mp/poc/MarketplaceDevConfig --query 'Parameter' | jq -rc '.Value ' > config.json",
     "upload-config": "aws ssm put-parameter --name '/mp/poc/MarketplaceDevConfig' --type 'String'  --value 'file://config.json' --overwrite",
@@ -21,13 +21,8 @@
     "winston": "3.14.2"
   },
   "devDependencies": {
-    "@eslint/js": "9.9.1",
-    "aws-sdk-client-mock": "2.1.1",
-    "aws-sdk-mock": "4.5.0",
     "axios-mock-adapter": "1.17.0",
     "chai": "4.2.0",
-    "eslint": "9.9.1",
-    "globals": "^15.9.0",
     "mocha": "6.1.3",
     "nyc": "15.0.1",
     "serverless-ssm-fetch": "2.0.0",

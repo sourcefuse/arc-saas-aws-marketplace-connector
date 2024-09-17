@@ -1,0 +1,11 @@
+{
+  "firstName": "Test",
+  "lastName": "User",
+  "contactPhone": "+1234567890",
+  "contactEmail": "test.user@sourcefuse.com",
+  "country": "India",
+  "zipcode": "201301",
+  "companyName": "Sourcefuse Arc SAAS",
+  "preferredSubdomain": "arc-saas",
+  "regToken": ""
+}

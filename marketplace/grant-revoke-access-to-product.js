@@ -1,11 +1,11 @@
 "use strict";
 
 const AWS = require('aws-sdk');
-const { ENV_VARS: ENV, MESSAGE_ACTION } = require("./constants");
+const { ENV_VARS: ENV, MESSAGE_ACTION, SUBJECTS } = require("./constants");
 const { SupportSNSArn: TopicArn, } = ENV;
 const { logger } = require("./utils");
-const SNS = new AWS.SNS({ apiVersion: '2010-03-31' });
 
+const SNS = require("./services/SNSService");
 exports.handler = async (event, context) => {
   await Promise.all(event.Records.map(async (record) => {
     logger.defaultMeta = { requestId: context.awsRequestId };
@@ -40,30 +40,29 @@ exports.handler = async (event, context) => {
     }
 
     let firstTimeUser = false;
-    if (typeof oldImage == "object" && Object.keys(oldImage).length == 0) {
+    if (typeof oldImage == "object" && typeof newImage.email != "undefined") {
       firstTimeUser = true;
     }
 
-
-
-    logger.debug('grantAccess', { 'data': grantAccess });
-    logger.debug('revokeAccess:', { 'data': revokeAccess });
-    logger.debug('entitlementUpdated', { 'data': entitlementUpdated });
+    logger.debug('firstTimeUser', { 'value': firstTimeUser });
+    logger.debug('entitlementUpdated', { 'value': entitlementUpdated });
+    logger.debug('grantAccess', { 'value': grantAccess });
+    logger.debug('revokeAccess:', { 'value': revokeAccess });
 
     if (grantAccess || revokeAccess || entitlementUpdated || firstTimeUser) {
       let message = '';
       let subject = '';
       if (grantAccess) {
-        subject = 'New AWS Marketplace Subscriber';
+        subject = SUBJECTS.GRANT_ACCESS
         message = `${MESSAGE_ACTION.SUBSCRIBE_SUCCESS}# ${JSON.stringify(newImage)}`;
       } else if (revokeAccess) {
-        subject = 'AWS Marketplace customer end of subscription';
+        subject = SUBJECTS.REVOKE_ACCESS;
         message = `${MESSAGE_ACTION.UNSUBSCRIBE_SUCCESS}# ${JSON.stringify(newImage)}`;
       } else if (entitlementUpdated) {
-        subject = 'AWS Marketplace customer change of subscription';
+        subject = SUBJECTS.ENTITLEMENT_UPDATED;
         message = `${MESSAGE_ACTION.ENTITLEMENT_UPDATED}# ${JSON.stringify(newImage)}`;
       } else if (firstTimeUser) {
-        subject = 'AWS Marketplace customer onboarded';
+        subject = SUBJECTS.ONBOARDED;
         message = `${MESSAGE_ACTION.ENTITLEMENT_CREATED}# ${JSON.stringify(newImage)}`;
       }
 
@@ -74,9 +73,9 @@ exports.handler = async (event, context) => {
       };
 
       logger.info('Sending notification');
-      logger.debug('SNSparams', { 'data': SNSparams });
+      logger.debug('SNSparams', { 'value': SNSparams });
 
-      if (typeof TopicArn != "undefined") {
+      if (typeof TopicArn != "undefined" && newImage.email != "undefined") {
         const response = await SNS.publish(SNSparams).promise();
         logger.debug("SNS Publish Response", { data: response })
       }
