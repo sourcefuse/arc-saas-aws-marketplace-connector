@@ -4,8 +4,6 @@ const { expect } = require("chai");
 const { handler } = require("../subscribe-user");
 const { checkHeaders } = require("./utils.test");
 const { DDBService, MeteringService } = require("../services");
-const utils = require("../utils");
-const nodemailer = require("nodemailer");
 
 let sandbox;
 describe("Start Test Subscribe User API", () => {

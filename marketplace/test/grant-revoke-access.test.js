@@ -7,8 +7,6 @@ const { SUBJECTS, MESSAGE_ACTION } = require("../constants");
 
 let sandbox;
 describe("Start Testing Grant Revoke Access Lambda", () => {
-
-
   beforeEach(() => {
     sandbox = sinon.createSandbox();
   });

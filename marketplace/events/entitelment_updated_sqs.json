@@ -1,0 +1,20 @@
+{
+  "Records": [
+    {
+      "attributes": {
+        "ApproximateFirstReceiveTimestamp": "1726656543668",
+        "ApproximateReceiveCount": "1",
+        "SenderId": "AIDAIT2UOQQY3AUEKVGXU",
+        "SentTimestamp": "1726656543657"
+      },
+      "awsRegion": "us-east-1",
+      "body": "{\n  \"Type\" : \"Notification\",\n  \"MessageId\" : \"d4d0b683-4009-5f6a-9c37-e9e7f2564edf\",\n  \"TopicArn\" : \"arn:aws:sns:us-east-1:XXX:aws-mp-entitlement-notification-22q98z822t42qnulk0kf3302q\",\n  \"Message\" : \"{\\n\\\"action\\\": \\\"entitlement-updated\\\",\\n\\\"customer-identifier\\\": \\\"M9ohxXyEYcd\\\",\\n\\\"product-code\\\": \\\"22q98z822t42qnulk0kf3302q\\\"\\n}\",\n  \"Timestamp\" : \"2024-09-18T10:49:03.616Z\",\n  \"SignatureVersion\" : \"1\",\n  \"Signature\" : \"gmnqF20iN6T7b2q/SJ/BQjBcPJ6IzXPMfWAjbc2AbXMhXaahg6bAx2y6XFXQFiXUGOvWBYMaNoVShTW3rtoaeQTn/pUvETweT9alWRV0qhm4LwdBLaCq19bvtAX2LUOC/H9CJpOtDaGZ1JFHVUXAZif88dQu4qOI+2mH5oevF3E6ryNwHZhZgnjT+q07Ks1IbtrL7RLB97GTAPkgYz63w3X+TboaPMTj9UlSyf6PR/Ye+YPV6KYD/pcRTSKEjpyg09rrFdFBvbF1jVq42QuCxBLwA3vREZX0cBw2kZjEt+OFebDgwpOdJXhj7RuYO6ROsiHwin4xPiNO6h5OuxlFGw==\",\n  \"SigningCertURL\" : \"\",\n  \"UnsubscribeURL\" : \"https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:XXXXX:aws-mp-entitlement-notification\"\n}",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:XXXXXXX:arc-saas-mp-entitlement-messages-dev",
+      "md5OfBody": "ec951c9c534ba52238238b0a1655570f",
+      "messageAttributes": {},
+      "messageId": "5451fbd3-1b0f-4fb8-b494-59b5641191b8",
+      "receiptHandle": ""
+    }
+  ]
+}

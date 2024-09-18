@@ -8,3 +8,9 @@ require("./subscribe-user.test");
 
 // Grant Revoke Access
 require("./grant-revoke-access.test");
+
+// Redirect User
+require("./redirect.test");
+
+// Entitlement SQS
+require("./entitlement-sqs.test");
