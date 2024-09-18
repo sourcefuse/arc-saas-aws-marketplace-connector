@@ -11,7 +11,7 @@ module.exports.SMTP_SETTINGS = {
   smtp_port: "465",
   smtp_password: process.env.SMTP_PASSWORD,
   smtp_user: process.env.SMTP_USER,
-  smtp_host: process.env.SMTP_HOST || "smtp.gmail.com",
+  smtp_host: process.env.SMTP_HOST || null,
   smtp_enable_ssl: "True"
 }
 
