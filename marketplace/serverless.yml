@@ -54,6 +54,13 @@ provider:
         rateLimit: 5
 
 functions:
+  Signup:
+    handler: signup.handler
+    events:
+      - http:
+          path: signup
+          method: post
+
   RedirectToRegister:
     handler: redirect.handler
     events:

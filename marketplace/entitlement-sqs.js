@@ -1,6 +1,6 @@
 "use strict";
 
-const { MESSAGE_ACTION } = require("./constants");
+const { MESSAGE_ACTION, ENV_VARS } = require("./constants");
 const { logger } = require("./utils");
 const {
   DDBService: dynamodb,
@@ -27,27 +27,37 @@ exports.handler = async (event) => {
         },
       };
       logger.info("Entitlement Params", { entitlementParams });
+
       const entitlementsResponse = await marketplaceEntitlementService.getEntitlements(entitlementParams).promise();
       logger.info("Entitlement Response", { entitlementsResponse });
-      
+
       const isExpired = entitlementsResponse.hasOwnProperty("Entitlements") === false || entitlementsResponse.Entitlements.length === 0 ||
         new Date(entitlementsResponse.Entitlements[0].ExpirationDate) < new Date();
-      
+
       const dynamoDbParams = {
-        TableName: process.env.userTable,
+        TableName: ENV_VARS.TABLE_USER,
         Key: {
           customerIdentifier: { S: message['customer-identifier'] },
           productCode: { S: message['product-code'] }
         },
-        UpdateExpression: 'set entitlement = :e, successfully_subscribed = :ss, subscription_expired = :se',
-        ExpressionAttributeValues: {
-          ':e': { S: JSON.stringify(entitlementsResponse) },
-          ':ss': { BOOL: true },
-          ':se': { BOOL: isExpired },
-        },
         ReturnValues: 'UPDATED_NEW',
       };
+
+      if (isExpired) {
+        dynamoDbParams["UpdateExpression"] = 'set subscription_expired = :se';
+        dynamoDbParams["ExpressionAttributeValues"] = {
+          ':se': { BOOL: isExpired },
+        };
+      } else {
+        dynamoDbParams["UpdateExpression"] = 'set entitlement = :e, subscription_expired = :se';
+        dynamoDbParams["ExpressionAttributeValues"] = {
+          ':e': { S: JSON.stringify(entitlementsResponse) },
+          ':se': { BOOL: isExpired },
+        };
+      }
+
       logger.info("DDB Params", { dynamoDbParams });
+      console.log(dynamoDbParams);
       await dynamodb.updateItem(dynamoDbParams).promise();
     } else {
       console.error('Unhandled action');
