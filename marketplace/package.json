@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-marketplace-catalog": "3.629.0",
+    "@aws-sdk/client-marketplace-catalog": "3.664.0",
     "aws-sdk": "2.1678.0",
     "axios": "1.7.5",
     "nodemailer": "6.9.14",
