@@ -20,7 +20,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs24.x
   region: ${self:custom.config.region} 
   stage: ${self:custom.config.stage}
   environment:

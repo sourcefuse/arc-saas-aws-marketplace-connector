@@ -3,7 +3,7 @@ custom:
   MP_SNS_TOPIC_ARN: arn:aws:sns:us-east-1:945019477776:arc-saas-mp-SupportSNSTopic-dev
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs24.x
   region: us-east-1
   stage: dev
   environment:
